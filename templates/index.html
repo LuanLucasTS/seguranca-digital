@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações de Autenticação</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1>Configurações de Autenticação</h1>
+<form>
+  <!-- Senha Forte -->
+  <div class="mb-3">
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"
+        {% if data['se""nha_forte'] == 1 %} checked {% elif data['senha_forte'] == 2 %} disabled {% endif %}
+        onchange="updateConfig('senha_forte', this)">
+    <label for="vehicle1"> Senha Forte</label><br>
+    <label for="ignore1">Ignorar</label>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="ignore1"
+        {% if data['senha_forte'] == 2 %} checked {% endif %}
+        onchange="toggleIgnore('senha_forte', this, 'vehicle1')">
+    </div>
+  </div>
+
+  <!-- Não Reusar -->
+  <div class="mb-3">
+    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car"
+        {% if data['nao_reusar'] == 1 %} checked {% elif data['nao_reusar'] == 2 %} disabled {% endif %}
+        onchange="updateConfig('nao_reusar', this)">
+    <label for="vehicle2"> Não Reusar Senha</label><br>
+    <label for="ignore2">Ignorar</label>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="ignore2"
+        {% if data['nao_reusar'] == 2 %} checked {% endif %}
+        onchange="toggleIgnore('nao_reusar', this, 'vehicle2')">
+    </div>
+  </div>
+
+  <!-- Gerenciador de Senhas -->
+  <div class="mb-3">
+    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat"
+        {% if data['gerenciador_senha'] == 1 %} checked {% elif data['gerenciador_senha'] == 2 %} disabled {% endif %}
+        onchange="updateConfig('gerenciador_senha', this)">
+    <label for="vehicle3"> Gerenciador de Senhas</label><br>
+    <label for="ignore3">Ignorar</label>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="ignore3"
+        {% if data['gerenciador_senha'] == 2 %} checked {% endif %}
+        onchange="toggleIgnore('gerenciador_senha', this, 'vehicle3')">
+    </div>
+  </div>
+</form>
+
+<script>
+function toggleIgnore(field, switchElement, checkboxId) {
+    const checkbox = document.getElementById(checkboxId);
+    const value = switchElement.checked ? 2 : 0;
+
+    fetch(`/update-config`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ field: field, value: value }),
+    }).then(() => {
+      if (switchElement.checked) {
+        checkbox.checked = false;  // Limpa o checkbox
+        checkbox.disabled = true;  // Desabilita o checkbox
+      } else {
+        checkbox.disabled = false;  // Habilita o checkbox novamente se o switch for desmarcado
+      }
+    });
+}
+
+</script>
+
+<!-- Incluindo o JavaScript do Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
