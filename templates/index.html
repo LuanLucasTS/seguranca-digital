@@ -11,7 +11,7 @@
   <!-- Senha Forte -->
   <div class="mb-3">
     <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"
-        {% if data['se""nha_forte'] == 1 %} checked {% elif data['senha_forte'] == 2 %} disabled {% endif %}
+        {% if data['senha_forte'] == 1 %} checked {% elif data['senha_forte'] == 2 %} disabled {% endif %}
         onchange="updateConfig('senha_forte', this)">
     <label for="vehicle1"> Senha Forte</label><br>
     <label for="ignore1">Ignorar</label>
@@ -52,6 +52,17 @@
 </form>
 
 <script>
+  function updateConfig(field, checkbox) {
+    const value = checkbox.checked ? 1 : 0;
+    fetch(`/update-config`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ field: field, value: value }),
+    });
+  }
+
 function toggleIgnore(field, switchElement, checkboxId) {
     const checkbox = document.getElementById(checkboxId);
     const value = switchElement.checked ? 2 : 0;
