@@ -5,48 +5,65 @@
     <title>Configurações de Autenticação</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="container">
 <h1>Configurações de Autenticação</h1>
 <form>
   <!-- Senha Forte -->
   <div class="mb-3">
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"
+    <input type="checkbox" id="senha_forte" name="senha_forte"
         {% if data['senha_forte'] == 1 %} checked {% elif data['senha_forte'] == 2 %} disabled {% endif %}
         onchange="updateConfig('senha_forte', this)">
-    <label for="vehicle1"> Senha Forte</label><br>
+    <label for="senha_forte"> Usar uma senha forte</label><br>
     <label for="ignore1">Ignorar</label>
     <div class="form-check form-switch">
       <input class="form-check-input" type="checkbox" id="ignore1"
         {% if data['senha_forte'] == 2 %} checked {% endif %}
-        onchange="toggleIgnore('senha_forte', this, 'vehicle1')">
+        onchange="toggleIgnore('senha_forte', this, 'senha_forte')">
     </div>
   </div>
 
   <!-- Não Reusar -->
-  <div class="mb-3">
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car"
-        {% if data['nao_reusar'] == 1 %} checked {% elif data['nao_reusar'] == 2 %} disabled {% endif %}
-        onchange="updateConfig('nao_reusar', this)">
-    <label for="vehicle2"> Não Reusar Senha</label><br>
-    <label for="ignore2">Ignorar</label>
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="ignore2"
-        {% if data['nao_reusar'] == 2 %} checked {% endif %}
-        onchange="toggleIgnore('nao_reusar', this, 'vehicle2')">
+<div class="container">
+  <div class="row">
+    <!-- Coluna da esquerda com o conteúdo da div -->
+    <div class="col-md-4">
+      <div class="mb-3">
+        <input type="checkbox" id="nao_reusar" name="nao_reusar"
+          {% if data['nao_reusar'] == 1 %} checked {% elif data['nao_reusar'] == 2 %} disabled {% endif %}
+          onchange="updateConfig('nao_reusar', this)">
+        <label for="nao_reusar"> Não reutilizar senhas</label><br>
+        <label for="ignore2">Ignorar</label>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="ignore2"
+            {% if data['nao_reusar'] == 2 %} checked {% endif %}
+            onchange="toggleIgnore('nao_reusar', this, 'nao_reusar')">
+        </div>
+      </div>
+    </div>
+    <!-- Segunda coluna -->
+    <div class="col-md-4">
+      <!-- Adicione o conteúdo para a segunda coluna aqui -->
+      <p>Conteúdo da segunda coluna.</p>
+    </div>
+    <!-- Terceira coluna -->
+    <div class="col-md-4">
+      <!-- Adicione o conteúdo para a terceira coluna aqui -->
+      <p>Conteúdo da terceira coluna.</p>
     </div>
   </div>
+</div>
 
   <!-- Gerenciador de Senhas -->
   <div class="mb-3">
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat"
+    <input type="checkbox" id="gerenciador_senha" name="gerenciador_senha"
         {% if data['gerenciador_senha'] == 1 %} checked {% elif data['gerenciador_senha'] == 2 %} disabled {% endif %}
         onchange="updateConfig('gerenciador_senha', this)">
-    <label for="vehicle3"> Gerenciador de Senhas</label><br>
+    <label for="gerenciador_senha"> Utilizar gerenciador de senhas seguro</label><br>
     <label for="ignore3">Ignorar</label>
     <div class="form-check form-switch">
       <input class="form-check-input" type="checkbox" id="ignore3"
         {% if data['gerenciador_senha'] == 2 %} checked {% endif %}
-        onchange="toggleIgnore('gerenciador_senha', this, 'vehicle3')">
+        onchange="toggleIgnore('gerenciador_senha', this, 'gerenciador_senha')">
     </div>
   </div>
 </form>
