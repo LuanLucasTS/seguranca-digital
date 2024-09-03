@@ -59,5 +59,13 @@ def index():
     data = get_authentication_data()
     return render_template('index.html', data=data)
 
+@app.route('/tema')
+def tema():
+    return render_template('tema.html')
+
+@app.route('/demo')
+def demo():
+    return render_template('demo.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
