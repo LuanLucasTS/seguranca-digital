@@ -1,0 +1,10 @@
+colocar as informações no banco e exibir as paginas com template. isso vai garantir mais facilidade em qualquer mudança
+informações em tabela
+
+perfil adm configurado por padrao
+
+parfil adm pode gerenciar os usuários
+
+a tabela do usuário vai ter as informações de cadastro. as tabelas com o status de progresso, vão ser sequenciadas de acordo com a id do usuário.
+vai ter que ter uma tabela de info da página pra colocar itens únicos como título e informação e uma tabelas de itens para as listas.
+

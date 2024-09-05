@@ -6,195 +6,79 @@
     <title>Segurança Digital</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.5.1/css/all.css'>
+    <link rel='stylesheet' href='static/style.css'>
   </head>
 
-<style>
-  .bg-custom {
-    background-color: #16191D;
-  }
-
-  .text-custom {
-    color: #A6ADBA;
-  }
-</style>
-
 <body class="p-3 bg-dark text-custom">
+  <nav class="navbar navbar-expand-lg navbar-dark mb-5 fs-5">
+   <a class="navbar-brand text-custom fs-2" href="#"><i class="fa-solid fa-shield-halved"></i> Segurança Digital</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto">
+          <!-- Adicione outros links de navegação aqui, se necessário -->
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clipboard-list"></i> Listas</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Perfil</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
 
-<nav class="navbar navbar-expand-lg navbar-dark mb-5 fs-5">
- <a class="navbar-brand text-custom fs-2" href="#"><i class="fa-solid fa-shield-halved"></i> Segurança Digital</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav me-auto">
-        <!-- Adicione outros links de navegação aqui, se necessário -->
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clipboard-list"></i> Listas</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Perfil</a>
-        </li>
-      </ul>
+  <div class="container rounded bg-custom p-4">
+    {% for info in info %}
+    <h1><i class="fa-solid fa-key"></i> {{ info[1] }}</h1>
+    <div>
+      <p> {{ info[2] }} </p>
     </div>
-</nav>
-
-<div class="container rounded bg-custom p-4">
-  <h1><i class="fa-solid fa-key"></i>  Autenticação</h1>
-  <div>
-    <p>
-      A maioria das violações de dados relatadas é causada pelo uso de senhas fracas, padrão ou roubadas.
-      Use senhas longas, fortes e exclusivas, gerencie-as em um gerenciador de senhas seguro, habilite a
-      autenticação de dois fatores, fique atento aos vazamentos e tome cuidado ao fazer login em suas contas.
-    </p>
+    {% endfor %}
+  <!-- Barra de Progresso -->
+  <div class="mb-4">
+    <p>Progresso:</p>
+    <div class="progress">
+      <div id="progressBar" class="progress-bar progress-bar-custom" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
   </div>
-<!-- Barra de Progresso -->
-<div class="mb-4">
-  <p>Progresso:</p>
-  <div class="progress">
-    <div id="progressBar" class="progress-bar progress-bar-custom" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  {% for seq, (key, value) in data.items() %}
+    <form>
+      <div class="row align-items-center ">
+        <div class="col-md-1">
+            <input class="custom-checkbox" type="checkbox" id="{{ key }}" name="{{ key }}"
+                {% if value == 1 %} checked {% elif value == 2 %} disabled {% endif %}
+                onchange="updateConfig('{{ key }}', this)"><br>
+            <label for="ignore_{{ loop.index }}">Ignorar</label>
+            <div class="form-check form-switch ">
+                <input class="form-check-input custom-switch" type="checkbox" id="ignore_{{ loop.index }}"
+                    {% if value == 2 %} checked {% endif %}
+                    onchange="toggleIgnore('{{ key }}', this, '{{ key }}')">
+            </div>
+        </div>
+        <div class="col-md-1">
+          <label for="{{ key }}">{{ itens[seq-1][1] }}</label><br>
+        </div>
+        <div class="col-md-2">
+          <span class="badge rounded-pill bg-success fs-6">{{ itens[seq-1][2] }}</span>
+        </div>
+        <div class="col-md-8">
+          <p>{{ itens[seq-1][3] }}</p>
+        </div>
+      </div>
+    </form>
+    <hr>
+  {% endfor %}
   </div>
-</div>
-
-  <form>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <input type="checkbox" id="senha_forte" name="senha_forte"
-              {% if data['senha_forte'] == 1 %} checked {% elif data['senha_forte'] == 2 %} disabled {% endif %}
-              onchange="updateConfig('senha_forte', this)">
-          <label for="senha_forte"> Usar uma senha forte</label><br>
-          <label for="ignore1">Ignorar</label>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="ignore1"
-              {% if data['senha_forte'] == 2 %} checked {% endif %}
-              onchange="toggleIgnore('senha_forte', this, 'senha_forte')">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <span class="badge rounded-pill bg-success fs-6">Essencial</span>
-      </div>
-      <!-- Terceira coluna -->
-      <div class="col-md-8">
-        <p>If your password is too short, or contains dictionary words, places or names- then it can be easily cracked through brute force, or guessed by someone. The easiest way to make a strong password, is by making it long (12+ characters)- consider using a 'passphrase', made up of many words. Alternatively, use a password generator to create a long, strong random password. Have a play with HowSecureIsMyPassword.net, to get an idea of how quickly common passwords can be cracked. Read more about creating strong passwords: securityinabox.org</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <input type="checkbox" id="nao_reusar" name="nao_reusar"
-            {% if data['nao_reusar'] == 1 %} checked {% elif data['nao_reusar'] == 2 %} disabled {% endif %}
-            onchange="updateConfig('nao_reusar', this)">
-          <label for="nao_reusar"> Não reutilizar senhas</label><br>
-          <label for="ignore2">Ignorar</label>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="ignore2"
-              {% if data['nao_reusar'] == 2 %} checked {% endif %}
-              onchange="toggleIgnore('nao_reusar', this, 'nao_reusar')">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <span class="badge rounded-pill bg-success fs-6">Essencial</span>
-      </div>
-      <div class="col-md-8">
-        <p>If someone was to reuse a password, and one site they had an account with suffered a leak, then a criminal could easily gain unauthorized access to their other accounts. This is usually done through large-scale automated login requests, and it is called Credential Stuffing. Unfortunately this is all too common, but it's simple to protect against- use a different password for each of your online accounts</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <input type="checkbox" id="gerenciador_senha" name="gerenciador_senha"
-              {% if data['gerenciador_senha'] == 1 %} checked {% elif data['gerenciador_senha'] == 2 %} disabled {% endif %}
-              onchange="updateConfig('gerenciador_senha', this)">
-          <label for="gerenciador_senha"> Utilizar gerenciador de senhas seguro</label><br>
-          <label for="ignore3">Ignorar</label>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="ignore3"
-              {% if data['gerenciador_senha'] == 2 %} checked {% endif %}
-              onchange="toggleIgnore('gerenciador_senha', this, 'gerenciador_senha')">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <span class="badge rounded-pill bg-success fs-6">Essencial</span>
-      </div>
-      <div class="col-md-8">
-        <p>For most people it is going to be near-impossible to remember hundreds of strong and unique passwords. A password manager is an application that generates, stores and auto-fills your login credentials for you. All your passwords will be encrypted against 1 master passwords (which you must remember, and it should be very strong). Most password managers have browser extensions and mobile apps, so whatever device you are on, your passwords can be auto-filled. A good all-rounder is Bitwarden, or see Recommended Password Managers</p>
-      </div>
-    </div>
-
-  </form>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    updateProgressBar();
-  });
-
-  function updateProgressBar() {
-    const rows = document.querySelectorAll('.row');
-    const totalRows = rows.length;
-    let completedRows = 0;
-
-    rows.forEach(row => {
-      const checkbox = row.querySelector('input[type="checkbox"]:not(.form-check-input)');
-      const switchElement = row.querySelector('input.form-check-input[type="checkbox"]');
-
-      if (checkbox && (checkbox.checked || checkbox.disabled) ||
-          (switchElement && switchElement.checked)) {
-        completedRows++;
-      }
-    });
-
-    const progress = ((completedRows / totalRows) * 100).toFixed(2);
-    const progressBar = document.getElementById('progressBar');
-    progressBar.style.width = `${progress}%`;
-    progressBar.setAttribute('aria-valuenow', progress);
-  }
-
-  function updateConfig(field, checkbox) {
-    const value = checkbox.checked ? 1 : 0;
-    fetch(`/update-config`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ field: field, value: value }),
-    }).then(() => updateProgressBar());
-  }
-
-  function toggleIgnore(field, switchElement, checkboxId) {
-    const checkbox = document.getElementById(checkboxId);
-    const value = switchElement.checked ? 2 : 0;
-
-    fetch(`/update-config`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ field: field, value: value }),
-    }).then(() => {
-      if (switchElement.checked) {
-        checkbox.checked = false;  // Limpa o checkbox
-        checkbox.disabled = true;  // Desabilita o checkbox
-      } else {
-        checkbox.disabled = false;  // Habilita o checkbox novamente se o switch for desmarcado
-      }
-      updateProgressBar();
-    });
-  }
-</script>
-  </body>
+</body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="static/script.js"></script>
 
 </html>

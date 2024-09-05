@@ -19,28 +19,36 @@ def get_db_connection():
         return None
 
 # Função para obter dados de autenticação
-def get_authentication_data():
+def get_data():
     conn = get_db_connection()
     if conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT senha_forte, nao_reusar, gerenciador_senha FROM autenticacao LIMIT 1")
+        cursor.execute("SHOW COLUMNS FROM status_autenticacao")
+        columns = [column[0] for column in cursor.fetchall() if column[0] != 'id']
+        query = f"SELECT {', '.join(columns)} FROM status_autenticacao"
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
         result = cursor.fetchone()
         cursor.close()
         conn.close()
-        return {
-            "senha_forte": result[0],
-            "nao_reusar": result[1],
-            "gerenciador_senha": result[2]
-        }
-    else:
-        return None
+
+        if result:
+            # Cria o dicionário original
+            data_dict = dict(zip(columns, result))
+
+            # Adiciona uma numeração sequencial
+            numbered_dict = {i + 1: (key, value) for i, (key, value) in enumerate(data_dict.items())}
+
+            return numbered_dict
+    return None
+
 
 # Função para atualizar dados de autenticação
 def update_authentication_data(field, value):
     conn = get_db_connection()
     if conn:
         cursor = conn.cursor()
-        query = f"UPDATE autenticacao SET {field} = %s"
+        query = f"UPDATE status_autenticacao SET {field} = %s"
         cursor.execute(query, (value,))
         conn.commit()
         cursor.close()
@@ -54,10 +62,27 @@ def update_config():
     update_authentication_data(field, value)
     return jsonify(success=True)
 
+def get_info(tabela):
+    result = None
+    try:
+        conn = get_db_connection()
+        if conn:
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT * FROM {tabela}")
+            result = cursor.fetchall()
+            cursor.close()
+            conn.close()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return result
+
 @app.route('/')
 def index():
-    data = get_authentication_data()
-    return render_template('index.html', data=data)
+    data = get_data()
+    print(data)
+    info = get_info("info_pagina")
+    itens = get_info("itens_pagina")
+    return render_template('index.html', data=data, info=info, itens=itens)
 
 @app.route('/tema')
 def tema():
