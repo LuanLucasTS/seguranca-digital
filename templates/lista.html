@@ -54,7 +54,7 @@
 
   {% for seq, (key, value) in data.items() %}
     <form>
-      <div class="row align-items-center ">
+      <div class="row align-items-center">
         <div class="col-md-1">
             <input class="custom-checkbox" type="checkbox" id="{{ key }}" name="{{ key }}"
                 {% if value == 1 %} checked {% elif value == 2 %} disabled {% endif %}
@@ -66,13 +66,13 @@
                     onchange="toggleIgnore('{{ key }}', this, '{{ key }}')">
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           <label for="{{ key }}">{{ itens[seq-1][1] }}</label><br>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 d-flex justify-content-evenly">
           <span class="badge rounded-pill bg-success fs-6">{{ itens[seq-1][2] }}</span>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
           <p>{{ itens[seq-1][3] }}</p>
         </div>
       </div>
