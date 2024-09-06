@@ -18,14 +18,14 @@ def get_db_connection():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
-# Função para obter dados de autenticação
-def get_data():
+# Função para obter dados de
+def get_data(categoria):
     conn = get_db_connection()
     if conn:
         cursor = conn.cursor()
-        cursor.execute("SHOW COLUMNS FROM status_autenticacao")
+        cursor.execute(f"SHOW COLUMNS FROM status_{categoria}")
         columns = [column[0] for column in cursor.fetchall() if column[0] != 'id']
-        query = f"SELECT {', '.join(columns)} FROM status_autenticacao"
+        query = f"SELECT {', '.join(columns)} FROM status_{categoria}"
         cursor.execute(query)
         columns = [col[0] for col in cursor.description]
         result = cursor.fetchone()
@@ -33,22 +33,18 @@ def get_data():
         conn.close()
 
         if result:
-            # Cria o dicionário original
             data_dict = dict(zip(columns, result))
-
-            # Adiciona uma numeração sequencial
             numbered_dict = {i + 1: (key, value) for i, (key, value) in enumerate(data_dict.items())}
-
             return numbered_dict
     return None
 
 
 # Função para atualizar dados de autenticação
-def update_authentication_data(field, value):
+def update_authentication_data(field, value, categoria):
     conn = get_db_connection()
     if conn:
         cursor = conn.cursor()
-        query = f"UPDATE status_autenticacao SET {field} = %s"
+        query = f"UPDATE status_{categoria} SET {field} = %s"
         cursor.execute(query, (value,))
         conn.commit()
         cursor.close()
@@ -59,16 +55,17 @@ def update_config():
     data = request.json
     field = data['field']
     value = data['value']
-    update_authentication_data(field, value)
+    categoria = data['categoria']
+    update_authentication_data(field, value, categoria)
     return jsonify(success=True)
 
-def get_info(tabela):
+def get_dados(tabela, categoria):
     result = None
     try:
         conn = get_db_connection()
         if conn:
             cursor = conn.cursor()
-            cursor.execute(f"SELECT * FROM {tabela}")
+            cursor.execute(f"SELECT * FROM {tabela} where categoria = '{categoria}'")
             result = cursor.fetchall()
             cursor.close()
             conn.close()
@@ -76,13 +73,12 @@ def get_info(tabela):
         print(f"An error occurred: {e}")
     return result
 
-@app.route('/')
-def index():
-    data = get_data()
-    print(data)
-    info = get_info("info_pagina")
-    itens = get_info("itens_pagina")
-    return render_template('index.html', data=data, info=info, itens=itens)
+@app.route('/lista/<categoria>')
+def lista(categoria):
+    data = get_data(categoria)
+    info = get_dados("info_pagina", categoria)
+    itens = get_dados("itens_pagina", categoria)
+    return render_template('lista.html', data=data, info=info, itens=itens, categoria=categoria)
 
 @app.route('/tema')
 def tema():

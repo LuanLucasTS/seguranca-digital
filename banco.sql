@@ -5,6 +5,23 @@ COLLATE utf8mb4_general_ci;
 CREATE USER 'seguranca-digital'@'localhost' IDENTIFIED BY 'AaHY^454#jUQSXJHtXdox4QY!w';
 GRANT ALL PRIVILEGES ON `seguranca-digital`.* TO 'seguranca-digital'@'localhost';
 
+CREATE TABLE `info_pagina` (
+  `id` int(2),
+  `titulo` varchar(20),
+  `detalhes` text,
+  `categoria` varchar(20),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `itens_pagina` (
+  `id` int(2),
+  `descricao` varchar(100),
+  `nivel` varchar(20),
+  `detalhes` text,
+  `categoria` varchar(20),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
 CREATE TABLE `status_autenticacao` (
   `id` int(2),
   `senha_forte` int(2),
@@ -31,24 +48,7 @@ CREATE TABLE `status_autenticacao` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `info_pagina` (
-  `id` int(2),
-  `titulo` varchar(20),
-  `detalhes` text,
-  `nome_db` varchar(20),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-CREATE TABLE `itens_pagina` (
-  `id` int(2),
-  `descricao` varchar(50),
-  `nivel` varchar(20),
-  `detalhes` text,
-  `nome_db` varchar(20),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-CREATE TABLE `navegacao` (
+CREATE TABLE `status_navegacao` (
   `id` int(2),
   `bloquear_anuncios` int(2),
   `navegador_privacidade` int(2),
@@ -57,7 +57,7 @@ CREATE TABLE `navegacao` (
   `navegador_atualizado` int(2),
   `https` int(2),
   `dns_https` int(2),
-  `multi-secao` int(2),
+  `multi_secao` int(2),
   `modo_anonimo` int(2),
   `impressao_digital` int(2),
   `gerenciar_cookies` int(2),

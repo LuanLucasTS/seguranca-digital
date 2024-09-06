@@ -23,34 +23,37 @@
     progressBar.setAttribute('aria-valuenow', progress);
   }
 
-  function updateConfig(field, checkbox) {
-    const value = checkbox.checked ? 1 : 0;
-    fetch(`/update-config`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ field: field, value: value }),
-    }).then(() => updateProgressBar());
-  }
+function updateConfig(field, checkbox) {
+  const value = checkbox.checked ? 1 : 0;
+  const categoria = document.getElementById('categoria').value;  // Pega a categoria
 
-  function toggleIgnore(field, switchElement, checkboxId) {
-    const checkbox = document.getElementById(checkboxId);
-    const value = switchElement.checked ? 2 : 0;
+  fetch(`/update-config`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ field: field, value: value, categoria: categoria }),  // Inclui a categoria
+  }).then(() => updateProgressBar());
+}
 
-    fetch(`/update-config`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ field: field, value: value }),
-    }).then(() => {
-      if (switchElement.checked) {
-        checkbox.checked = false;  // Limpa o checkbox
-        checkbox.disabled = true;  // Desabilita o checkbox
-      } else {
-        checkbox.disabled = false;  // Habilita o checkbox novamente se o switch for desmarcado
-      }
-      updateProgressBar();
-    });
-  }
+function toggleIgnore(field, switchElement, checkboxId) {
+  const checkbox = document.getElementById(checkboxId);
+  const value = switchElement.checked ? 2 : 0;
+  const categoria = document.getElementById('categoria').value;  // Pega a categoria
+
+  fetch(`/update-config`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ field: field, value: value, categoria: categoria }),  // Inclui a categoria
+  }).then(() => {
+    if (switchElement.checked) {
+      checkbox.checked = false;
+      checkbox.disabled = true;
+    } else {
+      checkbox.disabled = false;
+    }
+    updateProgressBar();
+  });
+}
