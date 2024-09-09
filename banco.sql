@@ -7,7 +7,8 @@ GRANT ALL PRIVILEGES ON `seguranca-digital`.* TO 'seguranca-digital'@'localhost'
 
 CREATE TABLE `info_pagina` (
   `id` int(2),
-  `titulo` varchar(20),
+  `icone` varchar(50),
+  `titulo` varchar(30),
   `detalhes` text,
   `categoria` varchar(20),
   PRIMARY KEY (`id`)
@@ -89,7 +90,7 @@ CREATE TABLE `status_navegacao` (
   `desabilitar_javascript` int(2)
 ) ENGINE=InnoDB;
 
-CREATE TABLE `email` (
+CREATE TABLE `status_email` (
   `id` int(2),
   `varios_emails` int(2),
   `endereco_privado` int(2),
@@ -106,12 +107,8 @@ CREATE TABLE `email` (
   `cliente_backup` int(2),
   `assinatura` int(2),
   `respostas_automaticas` int(2),
-  `protocolo_correio` int(2),
-  `auto_hospedagem` int(2),
-  `porta_tls` int(2),
-  `disponibilidade_dns` int(2),
-  `ataque_ddos` int(2),
-  `lista_ip` int(2)
+  `protocolo_correto` int(2),
+  `porta_tls` int(2)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `mensagens` (

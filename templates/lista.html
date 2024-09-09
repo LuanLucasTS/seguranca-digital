@@ -38,10 +38,8 @@
 
   <div class="container rounded bg-custom p-4">
     {% for info in info %}
-    <h1><i class="fa-solid fa-key"></i> {{ info[1] }}</h1>
-    <div>
-      <p> {{ info[2] }} </p>
-    </div>
+    <h1>{{ info[1] | safe }} {{ info[2]}}</h1>
+    <div><p>{{ info[3] }}</p></div>
     {% endfor %}
   <!-- Barra de Progresso -->
   <div class="mb-4">
