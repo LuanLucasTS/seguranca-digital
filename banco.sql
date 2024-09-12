@@ -87,8 +87,9 @@ CREATE TABLE `status_navegacao` (
   `rastreamento_url` int(2),
   `primeiro_lancamento` int(2),
   `navegador_tor` int(2),
-  `desabilitar_javascript` int(2)
-) ENGINE=InnoDB;
+  `desabilitar_javascript` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_email` (
   `id` int(2),
@@ -108,10 +109,11 @@ CREATE TABLE `status_email` (
   `assinatura` int(2),
   `respostas_automaticas` int(2),
   `protocolo_correto` int(2),
-  `porta_tls` int(2)
-) ENGINE=InnoDB;
+  `porta_tls` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `mensagens` (
+CREATE TABLE `status_mensagen` (
   `id` int(2),
   `criptografia` int(2),
   `codigo_aberto` int(2),
@@ -130,10 +132,11 @@ CREATE TABLE `mensagens` (
   `cuidado_rastreadores` int(2),
   `jurisdicao` int(2),
   `sigilo_encaminhamento` int(2),
-  `plataforma_descentralizada` int(2)
-) ENGINE=InnoDB;
+  `plataforma_descentralizada` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `midias_sociais` (
+CREATE TABLE `status_midia_social` (
   `id` int(2),
   `proteja_conta` int(2),
   `configuracoes_privacidade` int(2),
@@ -149,10 +152,11 @@ CREATE TABLE `midias_sociais` (
   `camuflagem_imagem` int(2),
   `falsificar_gps` int(2),
   `informações_falsas` int(2),
-  `nao_tenha` int(2)
-) ENGINE=InnoDB;
+  `nao_tenha` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `redes` (
+CREATE TABLE `status_redes` (
   `id` int(2),
   `senha_roteador` int(2),
   `wpa2` int(2),
@@ -177,10 +181,11 @@ CREATE TABLE `redes` (
   `gerenciamento_nuvem` int(2),
   `alcance_wifi` int(2),
   `trafego_tor` int(2),
-  `desativar_wifi` int(2)
-) ENGINE=InnoDB;
+  `desativar_wifi` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `dispositivos_moveis` (
+CREATE TABLE `status_dispositivos_moveis` (
   `id` int(2),
   `criptografia` int(2),
   `recursos_conectividade` int(2),
@@ -193,20 +198,22 @@ CREATE TABLE `dispositivos_moveis` (
   `mapas_offline` int(2),
   `anuncios_personalizados` int(2),
   `monitorar_rastreadores` int(2),
+  `apagar_discpositivo` int(2),
   `firewall_movel` int(2),
   `atividade_segundo_plano` int(2),
   `sandbox` int(2),
-  `trafego_tor` int(2),
   `teclados_virtuais` int(2),
   `reiniciar_dispositivo` int(2),
   `evitar_sms` int(2),
   `numero_privado` int(2),
   `stalkerwares` int(2),
   `navegador_aplicativo` int(2),
-  `rom_personalizada` int(2)
-) ENGINE=InnoDB;
+  `rom_personalizada` int(2),
+  `trafego_tor` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `computador` (
+CREATE TABLE `status_computador` (
   `id` int(2),
   `sistema_atualizado` int(2),
   `criptografia` int(2),
@@ -232,6 +239,7 @@ CREATE TABLE `computador` (
   `conexao_teclado` int(2),
   `injecao_teclas` int(2),
   `antivirus_gratuito` int(2),
+  `rootkits` int(2),
   `senha_bios` int(2),
   `sistema_seguranca` int(2),
   `vms` int(2),
@@ -241,26 +249,29 @@ CREATE TABLE `computador` (
   `acesso_ssh` int(2),
   `fechar_portas` int(2),
   `controle_acesso` int(2),
-  `token_canario` int(2)
-) ENGINE=InnoDB;
+  `token_canario` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `casa_inteligente` (
+CREATE TABLE `status_casa_inteligente` (
   `id` int(2),
   `renomear_dispositivos` int(2),
   `desativar_microfone` int(2),
-  `enterder_dados` int(2),
+  `entender_dados` int(2),
   `configuracoes_privacidade` int(2),
   `cuidado_vinculacao` int(2),
   `firmware_atualizado` int(2),
   `proteja_rede` int(2),
   `cuidado_wearables` int(2),
+  `local_internet` int(2),
   `riscos_alexa` int(2),
   `monitorar_rede` int(2),
   `negar_acesso` int(2),
-  `avaliar_riscos` int(2)
-) ENGINE=InnoDB;
+  `avaliar_riscos` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `financas_pessoais` (
+CREATE TABLE `status_financas_pessoais` (
   `id` int(2),
   `alertas_fraude` int(2),
   `congelamento_credito` int(2),
@@ -271,10 +282,11 @@ CREATE TABLE `financas_pessoais` (
   `comprar_criptomoedas` int(2),
   `misturar_bitcoin` int(2),
   `compras_online` int(2),
-  `entrega_alternativa` int(2)
-) ENGINE=InnoDB;
+  `entrega_alternativa` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `aspecto_homano` (
+CREATE TABLE `status_aspecto_humano` (
   `id` int(2),
   `verifique_remetentes` int(2),
   `notificacoes_popup` int(2),
@@ -296,10 +308,11 @@ CREATE TABLE `aspecto_homano` (
   `compartimentar` int(2),
   `protetor_privacidade` int(2),
   `endereco_encaminhamento` int(2),
-  `pagamento_anonimo` int(2)
-) ENGINE=InnoDB;
+  `pagamento_anonimo` int(2),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `aspecto_homano` (
+CREATE TABLE `status_seguranca_fisica` (
   `id` int(2),
   `destruir_documentos` int(2),
   `desativar_registros_publicos` int(2),
