@@ -54,12 +54,28 @@
     <form>
       <div class="row align-items-center">
         <div class="col-md-1">
-            <input class="custom-checkbox" type="checkbox" id="{{ key }}" name="{{ key }}"
+                <input class="
+                    {% if itens[seq-1][2] == 'Essencial' %}
+                        custom-checkbox-green
+                    {% elif itens[seq-1][2] == 'Opcional' %}
+                        custom-checkbox-yellow
+                    {% elif itens[seq-1][2] == 'Avançado' %}
+                        custom-checkbox-red
+                    {% endif %}"
+                 type="checkbox" id="{{ key }}" name="{{ key }}"
                 {% if value == 1 %} checked {% elif value == 2 %} disabled {% endif %}
                 onchange="updateConfig('{{ key }}', this)"><br>
             <label for="ignore_{{ loop.index }}">Ignorar</label>
             <div class="form-check form-switch ">
-                <input class="form-check-input custom-switch" type="checkbox" id="ignore_{{ loop.index }}"
+                <input class="form-check-input
+                    {% if itens[seq-1][2] == 'Essencial' %}
+                        custom-switch-green
+                    {% elif itens[seq-1][2] == 'Opcional' %}
+                        custom-switch-yellow
+                    {% elif itens[seq-1][2] == 'Avançado' %}
+                        custom-switch-red
+                    {% endif %}"
+                type="checkbox" id="ignore_{{ loop.index }}"
                     {% if value == 2 %} checked {% endif %}
                     onchange="toggleIgnore('{{ key }}', this, '{{ key }}')">
             </div>
@@ -68,7 +84,16 @@
           <label for="{{ key }}">{{ itens[seq-1][1] }}</label><br>
         </div>
         <div class="col-md-2 d-flex justify-content-evenly">
-          <span class="badge rounded-pill bg-success fs-6">{{ itens[seq-1][2] }}</span>
+             <span class="badge rounded-pill
+                {% if itens[seq-1][2] == 'Essencial' %}
+                    bg-success
+                {% elif itens[seq-1][2] == 'Opcional' %}
+                    bg-warning
+                {% elif itens[seq-1][2] == 'Avançado' %}
+                    bg-danger
+                {% endif %} fs-6">
+                {{ itens[seq-1][2] }}
+            </span>
         </div>
         <div class="col-md-7">
           <p>{{ itens[seq-1][3] }}</p>
