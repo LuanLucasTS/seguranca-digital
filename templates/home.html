@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Segurança Digital</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.5.1/css/all.css'>
+    <link rel='stylesheet' href='/static/style.css'>
+  </head>
+
+<body class="p-3 bg-dark text-custom">
+  <nav class="navbar navbar-expand-lg navbar-dark mb-5 fs-5">
+   <a class="navbar-brand text-custom fs-2" href="/"><i class="fa-solid fa-shield-halved"></i> Segurança Digital</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto">
+          <!-- Adicione outros links de navegação aqui, se necessário -->
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clipboard-list"></i> Checklists</a>
+            <ul class="dropdown-menu bg-custom" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/lista/autenticacao" style="color: #FACC15"><i class="fas fa-key"></i> Autenticação</a></li>
+              <li><a class="dropdown-item" href="/lista/navegacao" style="color: #34D399"><i class="fas fa-globe"></i> Navegação</a></li>
+              <li><a class="dropdown-item" href="/lista/email" style="color: #2DD4BF"><i class="fas fa-envelope"></i> Email</a></li>
+              <li><a class="dropdown-item" href="/lista/mensagem" style="color: #22D3EE"><i class="fas fa-comments"></i> Mensagem</a></li>
+              <li><a class="dropdown-item" href="/lista/midia_social" style="color: #60A5FA"><i class="fas fa-share-alt"></i> Rede Social</a></li>
+              <li><a class="dropdown-item" href="/lista/redes" style="color: #A78BFA"><i class="fas fa-network-wired"></i> Redes</a></li>
+              <li><a class="dropdown-item" href="/lista/dispositivos_moveis" style="color: #E879F9"><i class="fas fa-mobile-alt"></i> Dispositivos Móveis</a></li>
+              <li><a class="dropdown-item" href="/lista/computador" style="color: #F472B6"><i class="fas fa-mouse"></i> Computador</a></li>
+              <li><a class="dropdown-item" href="/lista/casa_inteligente" style="color: #F87171"><i class="fas fa-laptop-house"></i> Casa Inteligente</a></li>
+              <li><a class="dropdown-item" href="/lista/financas_pessoais" style="color: #C084FC"><i class="fas fa-credit-card"></i> Finanças Pessoais</a></li>
+              <li><a class="dropdown-item" href="/lista/aspecto_humano" style="color: #818CF8"><i class="fas fa-user-alt"></i> Aspecto Humano</a></li>
+              <li><a class="dropdown-item" href="/lista/seguranca_fisica" style="color: #A3E635"><i class="fas fa-building"></i> Segurança Física</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Perfil</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+
+  <div class="container rounded bg-custom p-4 mb-4 ">
+    <div class="d-flex justify-content-evenly"><h5>O checklist definitivo de</h5></div>
+    <div class="d-flex justify-content-evenly"><h1 class="display-1">Segurança Digital</h1></div>
+    <div class="d-flex justify-content-evenly"><h5>Seu guia para proteger sua vida digital e proteger sua privacidade</h5></div>
+    <div class="d-flex justify-content-evenly"><h1 class="display-1"><i class="fa-solid fa-shield-halved"></i></h1></div>
+  </div>
+
+<div class="container rounded bg-custom p-4 mb-4">
+  <div class="mb-4">
+    <p>Progresso Geral {{ total_feito }}/{{ total_itens[0] }}</p>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (total_feito / total_itens[0]) * 100 }}%;" aria-valuenow="{{ (total_feito / total_itens[0]) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Linha 1 -->
+            <div class="col-md-4">
+                <a href="/lista/autenticacao" style="text-decoration: none; color: #FACC15">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-key"></i></h1>
+                          <h3>{{ autenticacao[0] }}/{{ autenticacao[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Autenticação</h4>
+                          <p>Protegendo as credenciais de login da sua conta online</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/navegacao" style="text-decoration: none; color: #34D399">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-globe"></i></h1>
+                          <h3>{{  navegacao[0] }}/{{ navegacao[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Navegação</h4>
+                          <p>Evitando rastreamento, censura e coleta de dados online</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/email" style="text-decoration: none; color: #2DD4BF">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-envelope"></i></h1>
+                          <h3>{{ email[0] }}/{{  email[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Email</h4>
+                          <p>Protegendo suas contas de email</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Linha 2 -->
+            <div class="col-md-4">
+                <a href="/lista/mensagem" style="text-decoration: none; color: #22D3EE">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-comments"></i></h1>
+                          <h3>{{ mensagem[0] }}/ {{ mensagem[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Mensagem</h4>
+                          <p>Mantendo suas comunicações privadas e seguras</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/midia_social" style="text-decoration: none; color: #60A5FA">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-share-alt"></i></h1>
+                          <h3>{{  midia_social[0] }}/{{  midia_social[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Rede Social</h4>
+                          <p>Minimizando os riscos associados ao usar comunidades online</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/redes" style="text-decoration: none; color: #A78BFA">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-network-wired"></i></h1>
+                          <h3>{{ redes[0] }}/{{ redes[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Redes</h4>
+                          <p>Protegendo o tráfego da sua rede</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Linha 3 -->
+            <div class="col-md-4">
+                <a href="/lista/dispositivos_moveis" style="text-decoration: none; color: #E879F9">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-mobile-alt"></i></h1>
+                          <h3>{{ dispositivos_moveis[0] }}/{{ dispositivos_moveis[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Dispositivos Móveis</h4>
+                          <p>Reduzindo o rastreamento invasivo de celulares, tablets e notebooks</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/computador" style="text-decoration: none; color: #F472B6">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-mouse"></i></h1>
+                          <h3>{{ computador[0] }}/{{ computador[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Computador</h4>
+                          <p>Segurança para seu sistema operacional, dados e atividades</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/casa_inteligente" style="text-decoration: none; color: #F87171">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-laptop-house"></i></h1>
+                          <h3>{{ casa_inteligente[0] }}/{{ casa_inteligente[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Casa Inteligente</h4>
+                          <p>Usando a internet das coisas sem comprometer sua privacidade</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Linha 4 -->
+            <div class="col-md-4">
+                <a href="/lista/financas_pessoais" style="text-decoration: none; color: #C084FC">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-credit-card"></i></h1>
+                          <h3>{{ financas_pessoais[0] }}/{{ financas_pessoais[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Finanças Pessoais</h4>
+                          <p>Protegendo suas contas e transações financeiras</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/aspecto_humano" style="text-decoration: none; color: #818CF8">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-user-alt"></i></h1>
+                          <h3>{{ aspecto_humano[0] }}/{{ aspecto_humano[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Aspecto Humano</h4>
+                          <p>Evitando os riscos de segurança de engenharia social</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/lista/seguranca_fisica" style="text-decoration: none; color: #A3E635">
+                    <div class="container rounded bg-custom p-2 mb-4">
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <h1 class="display-4"><i class="fas fa-building"></i></h1>
+                          <h3>{{ seguranca_fisica[0] }}/{{ seguranca_fisica[1] }}</h3>
+                        </div>
+                        <div class="col-md-9">
+                          <h4>Segurança Física</h4>
+                          <p>Medidas de segurança para o mundo real</p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/static/script.js"></script>
+</html>
