@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import mysql.connector
 from mysql.connector import Error
 import bcrypt
@@ -32,9 +32,6 @@ def get_data(categoria):
         cursor.execute(query)
         columns = [col[0] for col in cursor.description]
         result = cursor.fetchone()
-        cursor.close()
-        conn.close()
-
         if result:
             data_dict = dict(zip(columns, result))
             numbered_dict = {i + 1: (key, value) for i, (key, value) in enumerate(data_dict.items())}
@@ -43,11 +40,11 @@ def get_data(categoria):
 
 
 # Função para atualizar dados de autenticação
-def update_authentication_data(field, value, categoria):
+def update_authentication_data(field, value, categoria, id):
     conn = get_db_connection()
     if conn:
         cursor = conn.cursor()
-        query = f"UPDATE status_{categoria} SET {field} = %s"
+        query = f"UPDATE status_{categoria} SET {field} = %s WHERE id={id}"
         cursor.execute(query, (value,))
         conn.commit()
         cursor.close()
@@ -55,11 +52,18 @@ def update_authentication_data(field, value, categoria):
 
 @app.route('/update-config', methods=['POST'])
 def update_config():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    email = (session['email_logado'])
+    query = f"SELECT id FROM usuarios where email='{email}'"
+    cursor.execute(query)
+    id = cursor.fetchone()
+    id = id[0]
     data = request.json
     field = data['field']
     value = data['value']
     categoria = data['categoria']
-    update_authentication_data(field, value, categoria)
+    update_authentication_data(field, value, categoria, id)
     return jsonify(success=True)
 
 def get_dados(tabela, categoria):
@@ -113,6 +117,10 @@ def total_itens():
 
 @app.route('/lista/<categoria>')
 def lista(categoria):
+    if 'email_logado' not in session or session['email_logado'] is None:
+        flash('Necessário fazer login')
+        return redirect(url_for('login'))
+
     data = get_data(categoria)
     info = get_dados("info_pagina", categoria)
     itens = get_dados("itens_pagina", categoria)
@@ -120,19 +128,29 @@ def lista(categoria):
 
 @app.route('/')
 def home():
+    if 'email_logado' not in session or session['email_logado'] is None:
+        flash('Necessário fazer login')
+        return redirect(url_for('login'))
 
-    autenticacao = contar_colunas_e_nao_zero('status_autenticacao', 1)
-    navegacao = contar_colunas_e_nao_zero('status_navegacao', 1)
-    email = contar_colunas_e_nao_zero('status_email', 1)
-    mensagem = contar_colunas_e_nao_zero('status_mensagem', 1)
-    midia_social = contar_colunas_e_nao_zero('status_midia_social', 1)
-    redes = contar_colunas_e_nao_zero('status_redes', 1)
-    dispositivos_moveis = contar_colunas_e_nao_zero('status_dispositivos_moveis', 1)
-    computador = contar_colunas_e_nao_zero('status_computador', 1)
-    casa_inteligente = contar_colunas_e_nao_zero('status_casa_inteligente', 1)
-    financas_pessoais = contar_colunas_e_nao_zero('status_financas_pessoais', 1)
-    aspecto_humano = contar_colunas_e_nao_zero('status_aspecto_humano', 1)
-    seguranca_fisica = contar_colunas_e_nao_zero('status_seguranca_fisica', 1)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    email = (session['email_logado'])
+    query = f"SELECT id FROM usuarios where email='{email}'"
+    cursor.execute(query)
+    id = cursor.fetchone()
+    id = id[0]
+    autenticacao = contar_colunas_e_nao_zero('status_autenticacao', id)
+    navegacao = contar_colunas_e_nao_zero('status_navegacao', id)
+    email = contar_colunas_e_nao_zero('status_email', id)
+    mensagem = contar_colunas_e_nao_zero('status_mensagem', id)
+    midia_social = contar_colunas_e_nao_zero('status_midia_social', id)
+    redes = contar_colunas_e_nao_zero('status_redes', id)
+    dispositivos_moveis = contar_colunas_e_nao_zero('status_dispositivos_moveis', id)
+    computador = contar_colunas_e_nao_zero('status_computador', id)
+    casa_inteligente = contar_colunas_e_nao_zero('status_casa_inteligente', id)
+    financas_pessoais = contar_colunas_e_nao_zero('status_financas_pessoais', id)
+    aspecto_humano = contar_colunas_e_nao_zero('status_aspecto_humano', id)
+    seguranca_fisica = contar_colunas_e_nao_zero('status_seguranca_fisica', id)
     total_feito = autenticacao[0] + navegacao[0] + email[0] + mensagem[0] + midia_social[0] + redes[0] + dispositivos_moveis[0] + computador[0] + casa_inteligente[0] + financas_pessoais[0] + aspecto_humano[0] + seguranca_fisica[0]
     return render_template('home.html',
                            total_itens=total_itens(),
@@ -152,11 +170,33 @@ def home():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     if request.method == 'GET':
-        return render_template("login.html")
+        return render_template('login.html')
     else:
-        flash("Login feito com sucesso!")
-        return redirect(url_for("login"))
+        email = request.form['email']
+        senha = request.form['senha']
+        query = f"SELECT senha FROM usuarios WHERE email='{email}'"
+        cursor.execute(query)
+        resultado = cursor.fetchone()
+        resultado = resultado[0]
+        if not resultado:
+            flash('Falha na autenticação.')
+            return redirect(url_for('login'))
+        elif bcrypt.checkpw(senha.encode('utf-8'), resultado.encode('utf-8')):
+            session['email_logado'] = request.form['email']
+            return redirect(url_for('home'))
+        else:
+            flash('Falha na autenticação.')
+            return redirect(url_for('home'))
+
+
+@app.route('/logout')
+def logout():
+    session['email_logado'] = None
+    flash('Você foi desconectado.')
+    return redirect(url_for('login'))
 
 
 @app.route('/novo_usuario', methods=['POST', 'GET'])
@@ -167,8 +207,16 @@ def novo_usuario():
     senha = senha.decode()
     data_atual = datetime.now()
     conn = get_db_connection()
+    cursor = conn.cursor()
+    query = f"SELECT * FROM usuarios WHERE email='{email}'"
+    cursor.execute(query)
+    usuario = cursor.fetchone()
+    if usuario:
+        flash("Já existe um usuário com esse email")
+        return redirect(url_for('login'))
+
+
     if conn:
-        cursor = conn.cursor()
         query = f"INSERT INTO usuarios (nome, email, senha, data_criacao) VALUES ('{nome}', '{email}', '{senha}', '{data_atual}')"
         cursor.execute(query)
         aspecto_humando = (f"INSERT INTO `seguranca-digital`.status_aspecto_humano (verifique_remetentes, notificacoes_popup, "
@@ -228,7 +276,7 @@ def novo_usuario():
         cursor.execute(redes)
         seguranca_fisica = (f"INSERT INTO `seguranca-digital`.status_seguranca_fisica (destruir_documentos, desativar_registros_publicos, marca_dagua, chamadas_recebidas, fique_alerta, "
                             f"perimetro_seguro, dispositivos_seguros, fora_vista, pin, skimmers, endereco_residencial, pin_biometria, cctv, reconhecimento_antifacial, visao_noturna, vestigios_dna) "
-                            f"VALUES(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);")
+                            f"VALUES(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);")
         cursor.execute(seguranca_fisica)
         conn.commit()
         cursor.close()
