@@ -6,7 +6,7 @@ CREATE USER 'seguranca-digital'@'localhost' IDENTIFIED BY 'AaHY^454#jUQSXJHtXdox
 GRANT ALL PRIVILEGES ON `seguranca-digital`.* TO 'seguranca-digital'@'localhost';
 
 CREATE TABLE `info_pagina` (
-  `id` int(2),
+  `id` int(5) NOT NULL,
   `icone` varchar(50),
   `titulo` varchar(30),
   `detalhes` text,
@@ -15,16 +15,16 @@ CREATE TABLE `info_pagina` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `itens_pagina` (
-  `id` int(2),
-  `descricao` varchar(100),
-  `nivel` varchar(20),
-  `detalhes` text,
-  `categoria` varchar(20),
+  `id` int(2) NOT NULL,
+  `descricao` varchar(100) DEFAULT NULL,
+  `nivel` varchar(20) DEFAULT NULL,
+  `detalhes` text DEFAULT NULL,
+  `categoria` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `status_autenticacao` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `senha_forte` int(2),
   `nao_reusar` int(2),
   `gerenciador_senha` int(2),
@@ -50,7 +50,7 @@ CREATE TABLE `status_autenticacao` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_navegacao` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `bloquear_anuncios` int(2),
   `navegador_privacidade` int(2),
   `pesquisa_privado` int(2),
@@ -92,7 +92,7 @@ CREATE TABLE `status_navegacao` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_email` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `varios_emails` int(2),
   `endereco_privado` int(2),
   `conta_segura` int(2),
@@ -113,8 +113,8 @@ CREATE TABLE `status_email` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `status_mensagen` (
-  `id` int(2),
+CREATE TABLE `status_mensagem` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `criptografia` int(2),
   `codigo_aberto` int(2),
   `confiavel` int(2),
@@ -137,7 +137,7 @@ CREATE TABLE `status_mensagen` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_midia_social` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `proteja_conta` int(2),
   `configuracoes_privacidade` int(2),
   `interacoes_publicas` int(2),
@@ -157,7 +157,7 @@ CREATE TABLE `status_midia_social` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_redes` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `senha_roteador` int(2),
   `wpa2` int(2),
   `firmware_atualizado` int(2),
@@ -186,7 +186,7 @@ CREATE TABLE `status_redes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_dispositivos_moveis` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `criptografia` int(2),
   `recursos_conectividade` int(2),
   `aplicativos_minimos` int(2),
@@ -214,7 +214,7 @@ CREATE TABLE `status_dispositivos_moveis` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_computador` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `sistema_atualizado` int(2),
   `criptografia` int(2),
   `backup` int(2),
@@ -254,7 +254,7 @@ CREATE TABLE `status_computador` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_casa_inteligente` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `renomear_dispositivos` int(2),
   `desativar_microfone` int(2),
   `entender_dados` int(2),
@@ -272,7 +272,7 @@ CREATE TABLE `status_casa_inteligente` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_financas_pessoais` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `alertas_fraude` int(2),
   `congelamento_credito` int(2),
   `cartoes_virtuais` int(2),
@@ -287,7 +287,7 @@ CREATE TABLE `status_financas_pessoais` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_aspecto_humano` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `verifique_remetentes` int(2),
   `notificacoes_popup` int(2),
   `supervisao_dispositivo` int(2),
@@ -313,7 +313,7 @@ CREATE TABLE `status_aspecto_humano` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `status_seguranca_fisica` (
-  `id` int(2),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `destruir_documentos` int(2),
   `desativar_registros_publicos` int(2),
   `marca_dagua` int(2),
@@ -329,10 +329,28 @@ CREATE TABLE `status_seguranca_fisica` (
   `cctv` int(2),
   `reconhecimento_antifacial` int(2),
   `visao_noturna` int(2),
-  `vestigios_dna` int(2)
-) ENGINE=InnoDB;
+  `vestigios_dna` int(2),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+CREATE TABLE `usuarios` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50),
+  `email` varchar(50),
+  `senha` varchar(200),
+  `data_criacao` date,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+INSERT INTO `seguranca-digital`.usuarios
+(id, nome, email, senha, data_criacao)
+VALUES(1, 'admin', 'admin@admin.com', '$2b$12$VK1bEnRk5bpX2Zbv.49Awu.QsPQxg1B6w4ilYwfxiBFmjYjs/MHJK', '2999-01-01');
+
+
+INSERT INTO `seguranca-digital`.status_aspecto_humano
+(verifique_remetentes, notificacoes_popup, supervisao_dispositivo, prevenir_camfecting, surfista_ombro, phishing, stalkerwares, fontes_confiaveis, armazenamento_dados, borrar_documentos, https, cartoes_virtuais, permissoes_aplicativo, listas_publicas, informacoes_adicionais, compartilhamento_dados, privacidade, compartimentar, protetor_privacidade, endereco_encaminhamento, pagamento_anonimo)
+VALUES(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `seguranca-digital`.status_autenticacao
-(id, senha_forte, nao_reusar, gerenciador_senha, evitar_compartilhar, `2fa`, codigos_backup, alertas_vazamento, protejet_senha, atualizar_senhas, nao_salvar, avitar_desconhecido, evitar_dicas, pergunta_seguranca, pin_curto, evitar_sms, gerenciador_2fa, desbloqueio_facial, keyloggers, token_hardware, gerenciador_offline, nomes_exclusivos)
-VALUES(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(senha_forte, nao_reusar, gerenciador_senha, evitar_compartilhar, `2fa`, codigos_backup, alertas_vazamento, protejet_senha, atualizar_senhas, nao_salvar, avitar_desconhecido, evitar_dicas, pergunta_seguranca, pin_curto, evitar_sms, gerenciador_2fa, desbloqueio_facial, keyloggers, token_hardware, gerenciador_offline, nomes_exclusivos)
+VALUES(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
