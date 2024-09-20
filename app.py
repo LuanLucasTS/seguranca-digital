@@ -24,11 +24,17 @@ def get_db_connection():
 # Função para obter dados de
 def get_data(categoria):
     conn = get_db_connection()
+    cursor = conn.cursor()
+    email = (session['email_logado'])
+    query = f"SELECT id FROM usuarios where email='{email}'"
+    cursor.execute(query)
+    id = cursor.fetchone()
+    id = id[0]
     if conn:
         cursor = conn.cursor()
         cursor.execute(f"SHOW COLUMNS FROM status_{categoria}")
         columns = [column[0] for column in cursor.fetchall() if column[0] != 'id']
-        query = f"SELECT {', '.join(columns)} FROM status_{categoria}"
+        query = f"SELECT {', '.join(columns)} FROM status_{categoria} WHERE id={id}"
         cursor.execute(query)
         columns = [col[0] for col in cursor.description]
         result = cursor.fetchone()
@@ -120,7 +126,6 @@ def lista(categoria):
     if 'email_logado' not in session or session['email_logado'] is None:
         flash('Necessário fazer login')
         return redirect(url_for('login'))
-
     data = get_data(categoria)
     info = get_dados("info_pagina", categoria)
     itens = get_dados("itens_pagina", categoria)
