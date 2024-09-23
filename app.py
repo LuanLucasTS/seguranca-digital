@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'asd89xc8n353897sd78vasvb3952isdf'
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
-            host="localhost",
+            host="192.168.1.109",
             user="seguranca-digital",
             password="AaHY^454#jUQSXJHtXdox4QY!w",
             database="seguranca-digital"
