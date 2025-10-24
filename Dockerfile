@@ -9,4 +9,5 @@ RUN pip install cryptography~=43.0.0
 ENV TZ="America/Campo_Grande"
 EXPOSE 6060
 WORKDIR /sistemas/seguranca-digital
+COPY .env /sistemas/seguranca-digital
 CMD ["python", "app.py"]
