@@ -1,10 +1,10 @@
 <h1 align="center">Segurança Digital</h1>
 
-<p align="center"><b><i>Esse projeto baseado e refeito totalmente a partir <a href='https://github.com/Lissy93/personal-security-checklist/tree/master' >desse outro</a></i></b><p/>
+<p align="center"><b><i>Esse projeto foi baseado e refeito totalmente a partir <a href='https://github.com/Lissy93/personal-security-checklist/tree/master' >desse outro</a></i></b><p/>
 
 ## Sobre o projeto
 
-O código foi escrito do zero, utilizando python com o framawork Flask, HTML, css com o framawork Bootstrap e um pouco de javascript.
+O código foi escrito do zero, utilizando python com o framawork Flask, HTML, CSS com o framawork Bootstrap e um pouco de javascript.
 <br>
 <p align="center"><img width="100%" src="https://github.com/LuanLucasTS/seguranca-digital/blob/main/print/1.png"></p>
 
@@ -32,6 +32,7 @@ RUN pip install cryptography~=43.0.0
 ENV TZ="America/Campo_Grande"
 EXPOSE 6060
 WORKDIR /sistemas/seguranca-digital
+COPY .env /sistemas/seguranca-digital
 CMD ["python", "app.py"]
 ~~~
 
